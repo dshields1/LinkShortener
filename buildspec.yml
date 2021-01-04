@@ -8,15 +8,12 @@ phases:
   pre_build:
     commands:
       - echo Entered the pre_build phase...
-      - npm install
+      - pip3 install -r src/requirements.txt
   build:
     commands:
       - echo Entered the build phase...
       - echo Build started on `date`
-      - npm run compile
-      - rm -r node_modules/
-      - npm install --only=production
-      - npm run copy-dependencies
+      - echo Nothing to build...
   post_build:
     commands:
       - echo Entered the post_build phase...

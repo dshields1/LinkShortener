@@ -4,17 +4,56 @@ Transform: AWS::Serverless-2016-10-31
 Description: Sample CloudFormation Template.
 
 Resources:
-  HelloWorldFunction:
+  ShortenUrl:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: helloworld.handler
-      Runtime: nodejs6.10
-      CodeUri: ../build
+      Handler: shortener.shorten_url
+      Runtime: python3.8
+      CodeUri: ../src
       Events:
         BasicAPI:
           Type: Api
           Properties:
-            Path: /helloworld
+            Path: /shorten
+            Method: POST
+
+  UI:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: shortener.ui
+      Runtime: python3.8
+      CodeUri: ../src
+      Events:
+        BasicAPI:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+
+  Inspect:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: shortener.inspect
+      Runtime: python3.8
+      CodeUri: ../src
+      Events:
+        BasicAPI:
+          Type: Api
+          Properties:
+            Path: /{short_code}/wtf
+            Method: GET
+
+  Redirect:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: shortener.redirect
+      Runtime: python3.8
+      CodeUri: ../src
+      Events:
+        BasicAPI:
+          Type: Api
+          Properties:
+            Path: /{short_code}
             Method: GET
 
 
